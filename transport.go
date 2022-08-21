@@ -8,11 +8,11 @@ import (
 	"github.com/go-kit/kit/endpoint"
 )
 
-type upperCaseRequest struct {
+type UppercaseRequest struct {
 	Str string `json:"str"`
 }
 
-type upperCaseResponse struct {
+type UppercaseResponse struct {
 	Str string `json:"str"`
 	Err string `json:"err"`
 }
@@ -25,14 +25,14 @@ type countResponse struct {
 	Count int `json:"count"`
 }
 
-func makeUpperCaseEndpoint(svc StringService) endpoint.Endpoint {
+func makeUppercaseEndpoint(svc StringService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(upperCaseRequest)
-		str, err := svc.UpperCase(&req.Str)
+		req := request.(UppercaseRequest)
+		str, err := svc.Uppercase(req.Str)
 		if err != nil {
-			return upperCaseResponse{Str: str, Err: err.Error()}, nil
+			return UppercaseResponse{Str: str, Err: err.Error()}, nil
 		}
-		return upperCaseResponse{Str: str, Err: ""}, nil
+		return UppercaseResponse{Str: str, Err: ""}, nil
 	}
 }
 
@@ -45,7 +45,7 @@ func makeCountEndpoint(svc StringService) endpoint.Endpoint {
 }
 
 func decodeUppercaseRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	var request upperCaseRequest
+	var request UppercaseRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		return nil, err
 	}

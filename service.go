@@ -9,17 +9,17 @@ import (
 var ErrEmpty = errors.New("empty string")
 
 type StringService interface {
-	UpperCase(*string) (string, error)
+	Uppercase(string) (string, error)
 	Count(string) int
 }
 
 type stringService struct{}
 
-func (s stringService) UpperCase(str *string) (string, error) {
-	if *str == "" {
+func (s stringService) Uppercase(str string) (string, error) {
+	if str == "" {
 		return "", ErrEmpty
 	}
-	return strings.ToUpper(*str), nil
+	return strings.ToUpper(str), nil
 }
 
 func (s stringService) Count(str string) int {
